@@ -1,0 +1,47 @@
+@if (authService.currentUser()) {
+<div
+  class="active-layout h-screen bg-gradient-to-br from-gray-50 to-gray-100/50 dark:from-slate-950 dark:to-slate-900 flex flex-col md:flex-row overflow-hidden">
+
+  <!-- Mobile Header -->
+  <div
+    class="md:hidden bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 p-4 flex items-center justify-between sticky top-0 z-40">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-slate-900 dark:bg-slate-800 rounded-lg flex items-center justify-center">
+        <span class="material-icons text-white text-lg">currency_rupee</span>
+      </div>
+      <span class="text-xl font-bold text-gray-800 dark:text-white tracking-tight">Expense Manager</span>
+    </div>
+    <button (click)="toggleMobileMenu()"
+      class="p-2 text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg">
+      <span class="material-icons">menu</span>
+    </button>
+  </div>
+
+  <!-- Sidebar (Desktop: Static, Mobile: Slide-over) -->
+  <!-- Overlay for mobile -->
+  @if (mobileMenuOpen()) {
+  <div class="fixed inset-0 bg-black/50 z-40 md:hidden" (click)="closeMobileMenu()"></div>
+  }
+
+  <div [class.translate-x-0]="mobileMenuOpen()" [class.-translate-x-full]="!mobileMenuOpen()"
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-white/95 backdrop-blur-lg border-r border-gray-200 transition-transform duration-300 transform md:hidden">
+    <app-sidebar (linkClicked)="closeMobileMenu()"></app-sidebar>
+  </div>
+
+  <!-- Desktop Sidebar (Floating) -->
+  <div class="hidden md:block transition-all duration-300 h-full p-2" [class.w-72]="!sidebarCollapsed()"
+    [class.w-24]="sidebarCollapsed()">
+    <app-sidebar [collapsed]="sidebarCollapsed()" (toggle)="toggleSidebar()"></app-sidebar>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 h-full overflow-y-auto w-full md:w-auto pt-0" [@routeAnimations]="getRouteAnimationData(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </main>
+</div>
+} @else {
+<!-- Auth Layout (Login/Register) -->
+<div [@routeAnimations]="getRouteAnimationData(authOutlet)" class="h-full">
+  <router-outlet #authOutlet="outlet"></router-outlet>
+</div>
+}

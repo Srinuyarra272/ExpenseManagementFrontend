@@ -1,0 +1,287 @@
+<div class="p-4 md:p-8 space-y-6 md:space-y-8 min-h-full pb-20">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Dashboard</h1>
+      <p class="text-gray-500 dark:text-slate-200 mt-1">Welcome back, here's what's happening today.</p>
+    </div>
+    <div
+      class="flex items-center justify-between md:justify-start gap-3 bg-white dark:bg-slate-800 p-1 rounded-xl shadow-sm border border-gray-100 dark:border-slate-800 w-full md:w-auto overflow-x-auto">
+      <button (click)="changeMonth(-1)"
+        class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg text-gray-400 hover:text-slate-900 dark:text-white transition-colors flex items-center justify-center">
+        <span class="material-icons">chevron_left</span>
+      </button>
+      <span class="text-sm font-semibold text-slate-700 dark:text-slate-200 w-32 text-center whitespace-nowrap">{{
+        currentMonthName }} {{
+        currentYear }}</span>
+      <button (click)="changeMonth(1)"
+        class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg text-gray-400 hover:text-slate-900 dark:text-white transition-colors flex items-center justify-center"
+        [disabled]="isFutureDate" [class.opacity-50]="isFutureDate">
+        <span class="material-icons">chevron_right</span>
+      </button>
+    </div>
+  </div>
+
+  @if (loading) {
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+    @for (i of [1,2,3,4]; track i) {
+    <div class="h-32 bg-gray-200 rounded-2xl animate-pulse"></div>
+    }
+  </div>
+  } @else {
+  <!-- Key Metrics Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+    <!-- Total Spent -->
+    <div class="card group hover:shadow-lg transition-all duration-300">
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <p class="text-sm font-medium text-gray-500 dark:text-slate-200">Total Spent</p>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ metrics!.totalSpentThisMonth | currency
+            }}</h3>
+        </div>
+        <div
+          class="p-3 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl group-hover:scale-110 transition-transform">
+          <span class="material-icons">account_balance_wallet</span>
+        </div>
+      </div>
+      <div class="flex items-center text-sm">
+        <span class="text-gray-400">vs last month</span>
+      </div>
+    </div>
+
+    <!-- Weekly Spend -->
+    <div class="card group hover:shadow-lg transition-all duration-300">
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <p class="text-sm font-medium text-gray-500 dark:text-slate-200">This Week</p>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ metrics!.totalSpentThisWeek | currency }}
+          </h3>
+        </div>
+        <div
+          class="p-3 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl group-hover:scale-110 transition-transform">
+          <span class="material-icons">date_range</span>
+        </div>
+      </div>
+      <div class="flex items-center text-sm">
+        <span class="text-base mr-1">🔥</span>
+        <span class="text-gray-500 dark:text-slate-200">Average {{ metrics!.averageDailySpend | currency }}/day</span>
+      </div>
+    </div>
+
+    <!-- Budget Status -->
+    <div class="card group hover:shadow-lg transition-all duration-300">
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <p class="text-sm font-medium text-gray-500 dark:text-slate-200">Budget Used</p>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ metrics!.budgetUtilizationPercentage }}%
+          </h3>
+        </div>
+        <div
+          class="p-3 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl group-hover:scale-110 transition-transform">
+          <span class="material-icons">pie_chart</span>
+        </div>
+      </div>
+      <div class="w-full bg-gray-100 dark:bg-slate-700 rounded-full h-2 mt-2 overflow-hidden">
+        <div class="h-2 rounded-full transition-all duration-1000"
+          [class]="metrics!.budgetUtilizationPercentage > 90 ? 'bg-slate-900 dark:bg-white' : 'bg-slate-600 dark:bg-slate-300'"
+          [style.width.%]="metrics!.budgetUtilizationPercentage"></div>
+      </div>
+    </div>
+
+    <!-- Upcoming Bills -->
+    <div class="card group hover:shadow-lg transition-all duration-300">
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <p class="text-sm font-medium text-gray-500 dark:text-slate-200">Upcoming Bills</p>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ metrics!.upcomingBillsCount }}</h3>
+        </div>
+        <div
+          class="p-3 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl group-hover:scale-110 transition-transform">
+          <span class="material-icons">event</span>
+        </div>
+      </div>
+      <div class="flex items-center text-sm">
+        <span class="text-slate-700 dark:text-slate-200 font-medium">{{ metrics!.upcomingBillsTotal | currency }}</span>
+        <span class="text-gray-400 ml-1">due soon</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Monthly Trends -->
+    <div class="card lg:col-span-2 min-h-[400px] flex flex-col">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="font-bold text-gray-800 dark:text-white text-lg">Spending Activity</h3>
+        <div class="flex gap-2">
+          <span class="flex items-center gap-1 text-sm text-gray-500 dark:text-slate-200">
+            <span class="w-2 h-2 rounded-full bg-slate-700"></span> Cumulative
+          </span>
+        </div>
+      </div>
+      <div class="flex-1 w-full relative z-0 min-h-[350px]">
+        <apx-chart style="display: block; height: 100%;" [series]="chartOptions!.series!" [chart]="chartOptions!.chart!"
+          [xaxis]="chartOptions!.xaxis!" [stroke]="chartOptions!.stroke!" [tooltip]="chartOptions!.tooltip!"
+          [dataLabels]="chartOptions!.dataLabels!" [legend]="chartOptions!.legend!" [markers]="chartOptions!.markers!"
+          [grid]="chartOptions!.grid!" [yaxis]="chartOptions!.yaxis!" [title]="chartOptions!.title!"
+          [fill]="chartOptions!.fill!" [colors]="chartOptions!.colors!"></apx-chart>
+      </div>
+    </div>
+
+    <!-- Category Distribution -->
+    <div class="card min-h-[400px]">
+      <h3 class="font-bold text-gray-800 dark:text-white text-lg mb-6">All Categories</h3>
+      <!-- Donut Chart -->
+      <div class="relative h-[250px] mb-6 z-0">
+        <apx-chart [series]="pieChartOptions.series!" [chart]="pieChartOptions.chart!"
+          [labels]="pieChartOptions.labels!" [colors]="pieChartOptions.colors!" [legend]="pieChartOptions.legend!"
+          [dataLabels]="pieChartOptions.dataLabels!" [responsive]="pieChartOptions.responsive!"
+          [plotOptions]="pieChartOptions.plotOptions!"></apx-chart>
+      </div>
+
+      <!-- Category List -->
+      <div class="flex flex-col gap-3 pr-2">
+        @for (cat of metrics?.topCategories || []; track cat.name) {
+        <div
+          class="flex-wrap flex items-center gap-2 justify-between p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-gray-100 dark:hover:border-slate-700">
+          <div class="flex items-center gap-3">
+            <div class="w-3 h-3 rounded-full shrink-0 shadow-sm" [style.background-color]="cat.color"></div>
+            <span class="text-sm font-medium text-gray-700 dark:text-slate-300 truncate max-w-[120px]">{{ cat.name
+              }}</span>
+          </div>
+          <div class="text-right shrink-0 ">
+            <span class="text-sm font-bold text-gray-900 dark:text-white block">{{ cat.value | currency }}</span>
+            <div class="w-20 bg-gray-100 dark:bg-slate-700 rounded-full h-1.5 mt-1 ml-auto">
+              <div class="h-1.5 rounded-full" [style.background-color]="cat.color"
+                [style.width.%]="(cat.value / (metrics?.totalSpentThisMonth || 1)) * 100"></div>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Budget vs Spent Analysis -->
+  @if (budgets.length > 0 && budgetChartOptions) {
+  <div class="card mb-6">
+    <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-6">Budget vs Spent Analysis</h3>
+    <div class="w-full relative z-0">
+      <apx-chart [series]="budgetChartOptions.series" [chart]="budgetChartOptions.chart"
+        [dataLabels]="budgetChartOptions.dataLabels" [plotOptions]="budgetChartOptions.plotOptions"
+        [xaxis]="budgetChartOptions.xaxis" [legend]="budgetChartOptions.legend" [fill]="budgetChartOptions.fill"
+        [colors]="budgetChartOptions.colors" [stroke]="budgetChartOptions.stroke" [tooltip]="budgetChartOptions.tooltip"
+        [grid]="budgetChartOptions.grid" [yaxis]="budgetChartOptions.yaxis"></apx-chart>
+    </div>
+  </div>
+  }
+
+  <!-- Recent Transactions -->
+  <div class="card overflow-hidden">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-lg font-bold text-gray-800 dark:text-white">Recent Transactions</h3>
+      <a routerLink="/transactions"
+        class="text-sm font-medium text-slate-500 hover:text-slate-900 dark:text-white hover:underline">View
+        All</a>
+    </div>
+    <!-- Desktop Table View -->
+    <div class="overflow-x-auto hidden lg:block">
+      <table class="w-full">
+        <thead class="bg-gray-50 dark:bg-slate-900 border-b border-gray-100">
+          <tr>
+            <th
+              class="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-slate-200 uppercase tracking-wider">
+              Transaction
+            </th>
+            <th
+              class="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-slate-200 uppercase tracking-wider hidden sm:table-cell">
+              Category</th>
+            <th
+              class="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-slate-200 uppercase tracking-wider hidden md:table-cell">
+              Date</th>
+            <th
+              class="px-6 py-4 text-right text-xs font-semibold text-gray-500 dark:text-slate-200 uppercase tracking-wider">
+              Amount</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 dark:divide-slate-800">
+          @for (transaction of metrics?.recentTransactions || []; track transaction.id) {
+          <tr class="hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800 transition-colors group">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <span class="material-icons text-gray-500 dark:text-slate-200 text-lg">{{ transaction.icon }}</span>
+                </div>
+                <div>
+                  <h4 class="font-bold text-gray-900 dark:text-white text-sm">{{ transaction.description }}</h4>
+                  <p class="text-xs text-gray-500 dark:text-slate-200 sm:hidden">{{ transaction.categoryName }} • {{
+                    transaction.date |
+                    date:'MMM d' }}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 hidden sm:table-cell">
+              <span
+                class="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-200">
+                {{ transaction.categoryName }}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-slate-200 hidden md:table-cell">
+              {{ transaction.date | date:'MMM d, y' }}
+            </td>
+            <td class="px-6 py-4 text-right">
+              <span class="font-bold text-sm" [class.text-slate-900 dark:text-white]="transaction.type === 'Expense'"
+                [class.text-slate-500]="transaction.type === 'Income'"
+                [class.dark:text-slate-200]="transaction.type === 'Income'">
+                {{ transaction.type === 'Expense' ? '-' : '+' }}{{ transaction.amount | currency }}
+              </span>
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="4" class="px-6 py-8 text-center text-gray-500">
+              No recent activity found for this period.
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mobile/Tablet Card Layout (< 1024px) -->
+    <div class="block lg:hidden space-y-3">
+      @for (transaction of metrics?.recentTransactions || []; track transaction.id) {
+      <div
+        class="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-gray-100 dark:border-slate-700/50 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+        <div class="flex items-center gap-4">
+          <div class="w-10 h-10 rounded-full bg-white dark:bg-slate-700 flex items-center justify-center shadow-sm">
+            <span class="material-icons text-gray-500 dark:text-slate-200 text-lg">{{ transaction.icon }}</span>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-900 dark:text-white text-sm line-clamp-1">{{ transaction.description }}</h4>
+            <div class="flex items-center gap-2 mt-1">
+              <span
+                class="text-xs font-medium text-slate-600 dark:text-slate-300 bg-gray-200 dark:bg-slate-600 px-1.5 py-0.5 rounded">{{
+                transaction.categoryName }}</span>
+              <span class="text-xs text-gray-400 dark:text-slate-400">{{ transaction.date | date:'MMM d' }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="text-right pl-2">
+          <span class="font-bold text-sm block" [class.text-slate-900 dark:text-white]="transaction.type === 'Expense'"
+            [class.text-slate-500]="transaction.type === 'Income'"
+            [class.dark:text-slate-200]="transaction.type === 'Income'">
+            {{ transaction.type === 'Expense' ? '-' : '+' }}{{ transaction.amount | currency }}
+          </span>
+        </div>
+      </div>
+      } @empty {
+      <div class="text-center py-8 text-gray-500 dark:text-slate-400">
+        No recent activity found.
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

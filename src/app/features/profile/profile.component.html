@@ -1,0 +1,115 @@
+<div class="p-4 md:p-8 max-w-4xl mx-auto space-y-6 md:space-y-8 min-h-screen">
+    <!-- Header -->
+    <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Account Settings</h1>
+        <p class="text-gray-500 dark:text-slate-300 mt-1">Manage your personal information and security</p>
+    </div>
+
+    <!-- Tabs/Nav -->
+    <div class="flex gap-4 border-b border-gray-200 dark:border-slate-700">
+        <button (click)="activeTab = 'profile'" class="pb-3 px-1 text-sm font-semibold transition-colors relative"
+            [ngClass]="activeTab === 'profile' ? 'text-slate-900 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200'">
+            Profile
+            @if (activeTab === 'profile') {
+            <div class="absolute bottom-0 left-0 w-full h-0.5 bg-slate-900 dark:bg-white rounded-full"></div>
+            }
+        </button>
+        <button (click)="activeTab = 'security'" class="pb-3 px-1 text-sm font-semibold transition-colors relative"
+            [ngClass]="activeTab === 'security' ? 'text-slate-900 dark:text-white' : 'text-gray-500 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200'">
+            Security
+            @if (activeTab === 'security') {
+            <div class="absolute bottom-0 left-0 w-full h-0.5 bg-slate-900 dark:bg-white rounded-full"></div>
+            }
+        </button>
+    </div>
+
+    @if (loading && !user) {
+    <!-- Skeleton Loading -->
+    <div class="animate-pulse space-y-4">
+        <div class="h-32 bg-gray-200 dark:bg-slate-800 rounded-xl w-full"></div>
+        <div class="h-64 bg-gray-200 dark:bg-slate-800 rounded-xl w-full"></div>
+    </div>
+    } @else {
+
+    <!-- Profile Tab -->
+    @if (activeTab === 'profile') {
+    <div class="card p-6 md:p-8 animate-fade-in-up">
+        <div class="flex items-center gap-4 mb-8">
+            <div
+                class="w-20 h-20 rounded-full bg-slate-900 dark:bg-slate-700 flex items-center justify-center text-white text-2xl font-bold md:text-3xl shadow-lg">
+                {{ user?.firstName?.charAt(0) }}{{ user?.lastName?.charAt(0) }}
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ user?.firstName }} {{ user?.lastName }}
+                </h2>
+                <p class="text-gray-500 dark:text-slate-300">{{ user?.email }}</p>
+                <span
+                    class="inline-block mt-2 px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs rounded-md font-medium">UserInfo</span>
+            </div>
+        </div>
+
+        <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="space-y-6 max-w-lg">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">First Name</label>
+                    <input formControlName="firstName" type="text" class="input-field">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">Last Name</label>
+                    <input formControlName="lastName" type="text" class="input-field">
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">Email Address</label>
+                <input formControlName="email" type="email" class="input-field" readonly
+                    title="Email cannot be changed directly">
+                <p class="text-xs text-gray-400 mt-1">Email cannot be changed.</p>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" [disabled]="loading || profileForm.invalid || profileForm.pristine"
+                    class="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    @if (loading) { <span class="material-icons animate-spin text-sm">sync</span> }
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+    }
+
+    <!-- Security Tab -->
+    @if (activeTab === 'security') {
+    <div class="card p-6 md:p-8 animate-fade-in-up">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Change Password</h3>
+
+        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" class="space-y-6 max-w-lg">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">Current
+                    Password</label>
+                <input formControlName="currentPassword" type="password" class="input-field">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">New Password</label>
+                <input formControlName="newPassword" type="password" class="input-field">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">Confirm New
+                    Password</label>
+                <input formControlName="confirmPassword" type="password" class="input-field">
+                @if (passwordForm.hasError('mismatch') && passwordForm.get('confirmPassword')?.touched) {
+                <p class="text-red-500 text-xs mt-1">Passwords do not match</p>
+                }
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" [disabled]="loading || passwordForm.invalid"
+                    class="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    @if (loading) { <span class="material-icons animate-spin text-sm">sync</span> }
+                    Update Password
+                </button>
+            </div>
+        </form>
+    </div>
+    }
+    }
+</div>
