@@ -1,0 +1,223 @@
+<div class="min-h-screen flex bg-gray-50 dark:bg-slate-950">
+    <!-- Left Side - Branding & Visual -->
+    <div
+        class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <!-- Animated Background Shapes -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-20 -left-20 w-72 h-72 bg-slate-700/20 rounded-full blur-3xl animate-float"></div>
+            <div
+                class="absolute bottom-20 -right-20 w-96 h-96 bg-slate-600/20 rounded-full blur-3xl animate-float-delayed">
+            </div>
+            <div class="absolute top-1/2 left-1/3 w-64 h-64 bg-slate-500/10 rounded-full blur-3xl animate-pulse-slow">
+            </div>
+        </div>
+
+        <!-- Infinite Floating Icons Layer -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none select-none">
+            <!-- Icon 1: Savings -->
+            <div class="animate-float-up delay-0 left-[10%] text-white">
+                <span class="material-icons text-6xl">savings</span>
+            </div>
+
+            <!-- Icon 2: Chart -->
+            <div class="animate-float-up delay-2000 left-[30%] text-white">
+                <span class="material-icons text-5xl">pie_chart</span>
+            </div>
+
+            <!-- Icon 3: Payments -->
+            <div class="animate-float-up delay-4000 left-[60%] text-white">
+                <span class="material-icons text-7xl">payments</span>
+            </div>
+
+            <!-- Icon 4: Trending -->
+            <div class="animate-float-up delay-6000 left-[80%] text-white">
+                <span class="material-icons text-5xl">trending_up</span>
+            </div>
+
+            <!-- Icon 5: Receipt -->
+            <div class="animate-float-up delay-8000 left-[20%] text-white">
+                <span class="material-icons text-6xl">receipt_long</span>
+            </div>
+
+            <!-- Icon 6: Balance -->
+            <div class="animate-float-up delay-10000 left-[50%] text-white">
+                <span class="material-icons text-8xl">account_balance</span>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="relative z-10 flex flex-col justify-center items-start px-16 text-white">
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-6">
+                    <div
+                        class="w-14 h-14 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/20">
+                        <span class="material-icons text-3xl">currency_rupee</span>
+                    </div>
+                    <h1 class="text-4xl font-bold">Expense Manager</h1>
+                </div>
+                <h2 class="text-3xl font-bold mb-4 leading-tight">Manage Your Finances<br />with Confidence</h2>
+                <div class="h-16">
+                    <p class="text-slate-300 text-lg leading-relaxed max-w-md">
+                        {{ displayText }}<span class="animate-blink border-r-2 border-slate-300 ml-1"></span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature List -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3 group animate-fade-in-up delay-100">
+                    <div
+                        class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-all">
+                        <span class="material-icons text-sm">check_circle</span>
+                    </div>
+                    <span class="text-slate-200">Real-time expense tracking</span>
+                </div>
+                <div class="flex items-center gap-3 group animate-fade-in-up delay-200">
+                    <div
+                        class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-all">
+                        <span class="material-icons text-sm">check_circle</span>
+                    </div>
+                    <span class="text-slate-200">Smart budget management</span>
+                </div>
+                <div class="flex items-center gap-3 group animate-fade-in-up delay-300">
+                    <div
+                        class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-all">
+                        <span class="material-icons text-sm">check_circle</span>
+                    </div>
+                    <span class="text-slate-200">Detailed financial insights</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Side - Login Form -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-16">
+        <div class="w-full max-w-md">
+            <!-- Mobile Logo -->
+            <div class="lg:hidden mb-8 text-center">
+                <div class="inline-flex items-center gap-2 mb-4">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl flex items-center justify-center">
+                        <span class="material-icons text-white text-xl">currency_rupee</span>
+                    </div>
+                    <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Expense Manager</h1>
+                </div>
+            </div>
+
+            <!-- Form Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Welcome back</h2>
+                <p class="text-slate-600 dark:text-slate-400">Sign in to continue to your account</p>
+            </div>
+
+            <!-- Error Message -->
+            @if (error) {
+            <div
+                class="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 p-4 rounded-xl text-sm flex items-center gap-3">
+                <span class="material-icons text-lg">error</span>
+                <span>{{ error }}</span>
+            </div>
+            }
+
+            <!-- Login Form -->
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+                <!-- Email Field -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">
+                        Email address
+                    </label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <span
+                                class="material-icons text-slate-400 dark:text-slate-500 group-focus-within:text-slate-600 dark:group-focus-within:text-slate-400 transition-colors">email</span>
+                        </div>
+                        <input formControlName="email" type="email" placeholder="you@example.com"
+                            class="input-field pl-12 h-14 text-base"
+                            [ngClass]="{'!border-red-400 !ring-red-200': form.get('email')?.invalid && form.get('email')?.touched}">
+                    </div>
+                    @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
+                    <p class="text-red-500 text-xs font-medium flex items-center gap-1">
+                        <span class="material-icons text-xs">info</span>
+                        Email is required
+                    </p>
+                    }
+                    @if (form.get('email')?.hasError('email') && form.get('email')?.touched) {
+                    <p class="text-red-500 text-xs font-medium flex items-center gap-1">
+                        <span class="material-icons text-xs">info</span>
+                        Please enter a valid email
+                    </p>
+                    }
+                </div>
+
+                <!-- Password Field -->
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">
+                            Password
+                        </label>
+                        <a href="#"
+                            class="text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors">
+                            Forgot password?
+                        </a>
+                    </div>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <span
+                                class="material-icons text-slate-400 dark:text-slate-500 group-focus-within:text-slate-600 dark:group-focus-within:text-slate-400 transition-colors">lock</span>
+                        </div>
+                        <input formControlName="password" type="password" placeholder="Enter your password"
+                            class="input-field pl-12 h-14 text-base"
+                            [ngClass]="{'!border-red-400 !ring-red-200': form.get('password')?.invalid && form.get('password')?.touched}">
+                    </div>
+                    @if (form.get('password')?.invalid && form.get('password')?.touched) {
+                    <p class="text-red-500 text-xs font-medium flex items-center gap-1">
+                        <span class="material-icons text-xs">info</span>
+                        Password is required
+                    </p>
+                    }
+                </div>
+
+                <!-- Remember Me -->
+                <div class="flex items-center">
+                    <input id="remember-me" type="checkbox" formControlName="rememberMe"
+                        class="w-4 h-4 rounded border-gray-300 text-slate-800 focus:ring-slate-500 focus:ring-2 cursor-pointer">
+                    <label for="remember-me"
+                        class="ml-2 text-sm text-slate-600 dark:text-slate-400 cursor-pointer select-none">
+                        Remember me for 30 days
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" [disabled]="form.invalid"
+                    class="btn-primary w-full h-14 text-base font-semibold shadow-xl shadow-slate-500/30 hover:shadow-2xl hover:shadow-slate-500/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none transition-all duration-300 relative overflow-hidden group">
+                    <span class="relative z-10">Sign in to your account</span>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-slate-700 to-slate-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    </div>
+                </button>
+
+                <!-- Divider -->
+                <div class="relative my-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-4 bg-gray-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 font-medium">
+                            New to Expense Manager?
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Register Link -->
+                <div class="text-center">
+                    <a routerLink="/register"
+                        class="inline-flex items-center justify-center gap-2 text-slate-700 dark:text-slate-300 font-semibold hover:text-slate-900 dark:hover:text-white transition-colors group">
+                        <span>Create a free account</span>
+                        <span
+                            class="material-icons text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

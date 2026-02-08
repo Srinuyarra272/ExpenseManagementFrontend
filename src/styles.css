@@ -1,0 +1,444 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary-color: #4F46E5;
+    /* Indigo 600 */
+    --secondary-color: #10B981;
+    /* Emerald 500 */
+    --bg-color: #F3F4F6;
+    /* Gray 100 */
+    --card-bg: #FFFFFF;
+    --text-main: #1F2937;
+    /* Gray 800 */
+    --text-muted: #6B7280;
+    /* Gray 500 */
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    /* background-color: var(--bg-color); Remove var usage to use Tailwind dark mode */
+    @apply bg-gray-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors duration-300;
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Glassmorphism Utilities */
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Custom Components */
+@layer components {
+    .btn-primary {
+        @apply bg-gradient-to-r from-slate-800 to-slate-900 text-white px-5 py-2.5 rounded-xl font-medium hover:shadow-lg hover:shadow-slate-500/30 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2;
+    }
+
+    .btn-secondary {
+        @apply bg-white text-gray-700 px-5 py-2.5 rounded-xl font-medium border border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 dark:hover:bg-slate-700;
+    }
+
+    .input-field {
+        @apply w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-200 focus:border-slate-500 transition-all font-medium text-gray-700 placeholder-gray-400 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-100 dark:focus:bg-slate-800 dark:placeholder-slate-500;
+    }
+
+    .card {
+        @apply bg-white rounded-2xl border border-gray-100/50 p-6 transition-all duration-300 dark:bg-slate-800 dark:border-slate-700/50;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .badge {
+        @apply px-2.5 py-1 rounded-lg text-xs font-semibold tracking-wide;
+    }
+}
+
+/* Global Premium Tweaks */
+::selection {
+    background-color: #cbd5e1;
+    /* slate-300 */
+    color: #0f172a;
+    /* slate-900 */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Dark Mode Menu Styles */
+.dark .mat-mdc-menu-panel {
+    @apply bg-slate-800 border border-slate-700 !important;
+}
+
+.dark .mat-mdc-menu-item {
+    @apply text-slate-200 !important;
+}
+
+.dark .mat-mdc-menu-item:hover {
+    @apply bg-slate-700 !important;
+}
+
+.dark .mat-mdc-menu-item .material-icons {
+    @apply text-slate-400 !important;
+}
+
+/* Custom Animations for Login Page */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px) translateX(0px);
+    }
+
+    33% {
+        transform: translateY(-20px) translateX(10px);
+    }
+
+    66% {
+        transform: translateY(10px) translateX(-10px);
+    }
+}
+
+@keyframes float-delayed {
+
+    0%,
+    100% {
+        transform: translateY(0px) translateX(0px);
+    }
+
+    33% {
+        transform: translateY(15px) translateX(-15px);
+    }
+
+    66% {
+        transform: translateY(-10px) translateX(20px);
+    }
+}
+
+@keyframes pulse-slow {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.05);
+    }
+}
+
+.animate-float {
+    animation: float 20s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+    animation: float-delayed 25s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 15s ease-in-out infinite;
+}
+
+/* Infinite Floating Icons Animation */
+/* Infinite Floating Icons Animation */
+@keyframes float-up {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.8);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.3;
+        /* Increased visibility */
+    }
+
+    90% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(-120vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+    }
+}
+
+.animate-float-up {
+    animation: float-up 25s linear infinite;
+    position: absolute;
+    bottom: -100px;
+    /* Start just below the container */
+}
+
+.delay-0 {
+    animation-delay: 0s;
+}
+
+.delay-2000 {
+    animation-delay: 4s;
+}
+
+.delay-4000 {
+    animation-delay: 8s;
+}
+
+.delay-6000 {
+    animation-delay: 12s;
+}
+
+.delay-8000 {
+    animation-delay: 16s;
+}
+
+.delay-10000 {
+    animation-delay: 20s;
+}
+
+/* Typewriter Cursor Blink */
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+.animate-blink {
+    animation: blink 1s step-end infinite;
+}
+
+/* Fade In Up Animation */
+@keyframes fade-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+    opacity: 0;
+    /* meaningful start state */
+}
+
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}
+
+/* Custom Monochromatic Datepicker Theme & Layout Reset */
+:root {
+    /* Theme Colors */
+    --mat-datepicker-calendar-date-selected-state-background-color: #0f172a;
+    --mat-datepicker-calendar-date-selected-state-text-color: white;
+    --mat-datepicker-calendar-date-in-range-state-background-color: #e2e8f0;
+    --mat-datepicker-toggle-active-ripple-color: #0f172a;
+}
+
+/* Dark Mode Theme Colors */
+.dark {
+    --mat-datepicker-calendar-date-selected-state-background-color: #f8fafc;
+    --mat-datepicker-calendar-date-selected-state-text-color: #0f172a;
+    --mat-datepicker-calendar-date-in-range-state-background-color: #334155;
+    --mat-datepicker-calendar-container-background-color: #1e293b;
+    --mat-datepicker-calendar-container-text-color: #f1f5f9;
+    --mat-datepicker-calendar-header-text-color: #f1f5f9;
+    --mat-datepicker-calendar-header-divider-color: #334155;
+    --mat-datepicker-calendar-navigation-button-icon-color: #f1f5f9;
+    --mat-datepicker-calendar-date-text-color: #f1f5f9;
+    --mat-datepicker-calendar-date-preview-state-outline-color: #f1f5f9;
+}
+
+/* 
+   Match .custom-date-range to .input-field 
+   (.input-field is px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl)
+*/
+
+/* 1. Reset Material Wrapper Dimensions & Background */
+.custom-date-range .mat-mdc-text-field-wrapper {
+    @apply h-[46px] px-4 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl transition-all !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* 2. Hide Default Material Outline/Borders */
+.custom-date-range .mdc-notched-outline__leading,
+.custom-date-range .mdc-notched-outline__notch,
+.custom-date-range .mdc-notched-outline__trailing {
+    border: none !important;
+}
+
+/* 3. Focus State - Mimic .input-field focus */
+.custom-date-range.mat-focused .mat-mdc-text-field-wrapper {
+    @apply bg-white dark:bg-slate-800 ring-2 ring-slate-200 border-slate-500 dark:border-slate-500 !important;
+}
+
+/* 4. Content Alignment */
+.custom-date-range .mat-mdc-form-field-flex {
+    height: 100% !important;
+    align-items: center !important;
+    padding: 0 !important;
+}
+
+.custom-date-range .mat-mdc-form-field-infix {
+    padding: 0 !important;
+    min-height: unset !important;
+    border-top: 0 !important;
+    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* 5. Input Text Styling */
+.custom-date-range input.mat-start-date,
+.custom-date-range input.mat-end-date {
+    @apply text-sm text-gray-700 dark:text-slate-100 font-medium font-['Outfit'] !important;
+    padding: 0 !important;
+    vertical-align: middle !important;
+}
+
+/* 6. Icon Styling */
+.custom-date-range .mat-datepicker-toggle-default-icon {
+    @apply text-gray-400 dark:text-slate-500 !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Remove subscript spacing */
+/* Custom Single Datepicker Theme (Mirrors Range Picker) */
+
+/* 1. Reset Material Wrapper Dimensions & Background */
+.custom-datepicker .mat-mdc-text-field-wrapper {
+    @apply h-[46px] px-4 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl transition-all !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* 2. Hide Default Material Outline/Borders */
+.custom-datepicker .mdc-notched-outline__leading,
+.custom-datepicker .mdc-notched-outline__notch,
+.custom-datepicker .mdc-notched-outline__trailing {
+    border: none !important;
+}
+
+/* 3. Focus State */
+.custom-datepicker.mat-focused .mat-mdc-text-field-wrapper {
+    @apply bg-white dark:bg-slate-800 ring-2 ring-slate-200 border-slate-500 dark:border-slate-500 !important;
+}
+
+/* 4. Content Alignment */
+.custom-datepicker .mat-mdc-form-field-flex {
+    height: 100% !important;
+    align-items: center !important;
+    padding: 0 !important;
+}
+
+.custom-datepicker .mat-mdc-form-field-infix {
+    padding: 0 !important;
+    min-height: unset !important;
+    border-top: 0 !important;
+    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* 5. Input Text Styling */
+.custom-datepicker input.mat-input-element,
+.custom-datepicker input.mat-mdc-input-element {
+    @apply text-sm text-gray-700 dark:text-slate-100 font-medium font-['Outfit'] !important;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* 6. Icon Styling */
+.custom-datepicker .mat-datepicker-toggle-default-icon {
+    @apply text-gray-400 dark:text-slate-500 !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Remove subscript spacing */
+.custom-datepicker .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}
+
+/* Custom Menu Styling (Monochromatic) */
+.custom-menu.mat-mdc-menu-panel {
+    @apply bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-xl shadow-xl shadow-gray-200/50 dark:shadow-none !important;
+    min-width: 160px !important;
+}
+
+.custom-menu .mat-mdc-menu-content {
+    padding: 6px !important;
+}
+
+.custom-menu .mat-mdc-menu-item {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.875rem !important;
+    /* 14px */
+    font-weight: 500 !important;
+    @apply text-slate-700 dark:text-slate-200 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors !important;
+    min-height: 44px !important;
+    line-height: 44px !important;
+    margin-bottom: 2px !important;
+}
+
+.custom-menu .mat-mdc-menu-item:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Override icon colors and SIZE */
+.custom-menu .mat-mdc-menu-item .material-icons {
+    font-size: 20px !important;
+    width: 20px !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    margin-right: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
