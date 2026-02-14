@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
 export enum TransactionType {
@@ -65,7 +66,7 @@ export interface PagedResult<T> {
 })
 export class TransactionService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api/transactions';
+  private apiUrl = `${environment.apiUrl}/transactions`;
 
   getTransactions(filter: TransactionFilterParams): Observable<PagedResult<TransactionDto>> {
     let params: any = {

@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
 export interface DashboardMetrics {
@@ -41,7 +42,7 @@ export class DashboardService {
   private http = inject(HttpClient);
   // Assuming backend runs on 5000 (check if http or https)
   // Angular proxy or CORS config needed if different ports
-  private apiUrl = 'http://localhost:5000/api/dashboard';
+  private apiUrl = `${environment.apiUrl}/dashboard`;
 
   getMetrics(month?: number, year?: number): Observable<DashboardMetrics> {
     let params: any = {};

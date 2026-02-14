@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
 export interface BudgetDto {
@@ -28,7 +29,7 @@ export interface CreateBudgetDto {
 })
 export class BudgetService {
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:5000/api/budgets';
+    private apiUrl = `${environment.apiUrl}/budgets`;
 
     getBudgets(month: number, year: number): Observable<BudgetDto[]> {
         let params = new HttpParams().set('month', month).set('year', year);

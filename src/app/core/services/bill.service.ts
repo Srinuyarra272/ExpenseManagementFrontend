@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
 export interface BillDto {
@@ -32,7 +33,7 @@ export interface CreateBillDto {
 })
 export class BillService {
     private http = inject(HttpClient);
-    private apiUrl = 'http://localhost:5000/api/bills';
+    private apiUrl = `${environment.apiUrl}/bills`;
 
     getBills(): Observable<BillDto[]> {
         return this.http.get<BillDto[]>(this.apiUrl);

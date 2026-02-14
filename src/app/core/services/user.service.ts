@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
 export interface UserProfileDto {
@@ -26,7 +27,7 @@ export interface ChangePasswordDto {
 export class UserService {
   private http = inject(HttpClient);
   // Assuming standard port 5000, consider using environment.ts in real apps
-  private apiUrl = 'http://localhost:5000/api/users';
+  private apiUrl = `${environment.apiUrl}/users`;
 
   getProfile(): Observable<UserProfileDto> {
     return this.http.get<UserProfileDto>(`${this.apiUrl}/profile`);
