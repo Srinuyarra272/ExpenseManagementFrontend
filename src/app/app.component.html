@@ -24,7 +24,7 @@
   }
 
   <div [class.translate-x-0]="mobileMenuOpen()" [class.-translate-x-full]="!mobileMenuOpen()"
-    class="fixed inset-y-0 left-0 z-50 w-64 bg-white/95 backdrop-blur-lg border-r border-gray-200 transition-transform duration-300 transform md:hidden">
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-white/95 backdrop-blur-lg border-r border-gray-200 dark:border-slate-800 transition-transform duration-300 transform md:hidden dark:bg-slate-900/95">
     <app-sidebar (linkClicked)="closeMobileMenu()"></app-sidebar>
   </div>
 

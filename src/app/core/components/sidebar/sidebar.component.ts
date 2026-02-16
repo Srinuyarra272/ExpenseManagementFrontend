@@ -10,7 +10,7 @@ import { filter } from 'rxjs/operators';
     standalone: true,
     imports: [RouterLink, RouterLinkActive, NgClass],
     template: `
-    <div class="h-full flex flex-col bg-white/95 backdrop-blur-lg border border-gray-100 rounded-2xl shadow-xl transition-all duration-300 relative dark:bg-slate-900/95 dark:border-slate-800"
+    <div class="h-full flex flex-col bg-white/95 backdrop-blur-lg border border-gray-100 md:rounded-2xl shadow-xl transition-all duration-300 relative dark:bg-slate-900/95 dark:border-slate-800"
          [class.items-center]="collapsed" [class.w-full]="true">
       
       <!-- Toggle Button (Desktop Only) -->
